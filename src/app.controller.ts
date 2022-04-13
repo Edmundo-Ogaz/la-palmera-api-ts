@@ -14,8 +14,10 @@ export class AppController {
     private authService: AuthService,
   ) {}
 
+  @Public()
   @Get()
   getHello(): string {
+    console.log('getHello...');
     return this.appService.getHello();
   }
 
@@ -23,11 +25,13 @@ export class AppController {
   @UseGuards(LocalAuthGuard)
   @Post('auth/login')
   async login(@Request() req) {
+    console.log('login...');
     return this.authService.login(req.user);
   }
 
   @Get('profile')
   getProfile(@Request() req) {
+    console.log('getProfile...');
     return req.user;
   }
 }
