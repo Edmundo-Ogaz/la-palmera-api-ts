@@ -7,7 +7,7 @@ import { UsersModule } from './users/users.module';
 
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './entity/User';
+import { UserModel } from './entity/UserModel';
 import { TokensModule } from './token/tokens.module';
 import { ComunaModule } from './comuna/comuna.module';
 
@@ -22,9 +22,9 @@ import { ComunaModule } from './comuna/comuna.module';
       port: 3306,
       username: 'newuser',
       password: 'password',
-      database: 'test',
+      database: 'lapalmera2',
       logging: true,
-      entities: [User],
+      entities: [UserModel],
       //autoLoadEntities: true,
       //synchronize: true,
     }),
