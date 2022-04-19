@@ -1,15 +1,19 @@
 import { Module } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 
 import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
-
-import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { UserModel } from './entity/UserModel';
 import { TokensModule } from './token/tokens.module';
 import { ComunaModule } from './comuna/comuna.module';
+
+import { JwtAuthGuard } from './auth/jwt-auth.guard';
+
+import { UserModel } from './entity/UserModel';
+import { Comuna } from './entity/Comuna';
+import { CiudadModule } from './ciudad/ciudad.module';
+import { Ciudad } from './entity/Ciudad';
 
 @Module({
   imports: [
@@ -24,11 +28,12 @@ import { ComunaModule } from './comuna/comuna.module';
       password: 'password',
       database: 'lapalmera2',
       logging: true,
-      entities: [UserModel],
+      entities: [UserModel, Comuna, Ciudad],
       //autoLoadEntities: true,
       //synchronize: true,
     }),
     ComunaModule,
+    CiudadModule,
   ],
   controllers: [AppController],
   providers: [

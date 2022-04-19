@@ -10,3 +10,6 @@ generate-module:
 generate-service:
 	nest g service $(filter-out $@,$(MAKECMDGOALS))
 
+generate-controller:
+	nest g controller $(filter-out $@,$(MAKECMDGOALS))
+

@@ -7,7 +7,7 @@ import { LocalStrategy } from './local.strategy';
 import { JwtStrategy } from './jwt.strategy';
 
 import { UsersModule } from '../users/users.module';
-import { TokensModule } from 'src/token/tokens.module';
+import { TokensModule } from '../token/tokens.module';
 
 @Module({
   imports: [UsersModule, TokensModule, PassportModule],
