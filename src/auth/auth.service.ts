@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import * as bcrypt from 'bcrypt';
 
@@ -10,10 +11,11 @@ export class AuthService {
   constructor(
     private usersService: UsersService,
     private tokenService: TokensService,
+    private configService: ConfigService,
   ) {}
 
   async validateUser(username: string, pass: string): Promise<any> {
-    console.log('AuthService username');
+    console.log('AuthService validateUser');
     const user = await this.usersService.findOne(username);
     if (user && (await bcrypt.compare(pass, user.password))) {
       const { password, ...result } = user;
@@ -23,9 +25,21 @@ export class AuthService {
   }
 
   async login(user: any) {
+    console.log('AuthService login');
     const payload = { username: user.username, sub: user.userId };
+    const token = this.tokenService.getToken(payload);
     return {
-      access_token: this.tokenService.getToken(payload),
+      expiration: new Date(
+        Date.now() +
+          parseInt(this.configService.get<string>('EXPIRATION_TIME')),
+      ),
+      user: {
+        name: 'test',
+        isAdmin: true,
+        userId: 1,
+        username: '1234@1234.cl',
+      },
+      token,
     };
   }
 }

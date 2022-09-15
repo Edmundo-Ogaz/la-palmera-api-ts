@@ -1,10 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsersService } from './users.service';
+import { AuthController } from './auth.controller';
 import { UserModel } from '../entity/UserModel';
+import { AuthService } from './auth.service';
+import { UsersModule } from '../users/users.module';
+import { TokensModule } from '../token/tokens.module';
+import { ConfigModule } from '@nestjs/config';
 
-describe('UsersService', () => {
-  let service: UsersService;
+describe('AuthController', () => {
+  let controller: AuthController;
   let module: TestingModule;
 
   beforeAll(async () => {
@@ -21,11 +25,15 @@ describe('UsersService', () => {
           entities: [UserModel],
         }),
         TypeOrmModule.forFeature([UserModel]),
+        UsersModule,
+        TokensModule,
+        ConfigModule,
       ],
-      providers: [UsersService],
+      controllers: [AuthController],
+      providers: [AuthService],
     }).compile();
 
-    service = module.get<UsersService>(UsersService);
+    controller = module.get<AuthController>(AuthController);
   });
 
   afterAll(async () => {
@@ -33,6 +41,6 @@ describe('UsersService', () => {
   });
 
   it('should be defined', () => {
-    expect(service).toBeDefined();
+    expect(controller).toBeDefined();
   });
 });
