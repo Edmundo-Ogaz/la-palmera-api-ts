@@ -1,0 +1,21 @@
+name: GitHub Actions Demo
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  Explore-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Install dependencies
+        run: npm install
+      - name: Unit test
+        run: npm run test
