@@ -5,12 +5,9 @@ import { Comuna } from '../entity/Comuna';
 import { ComunaService } from './comuna.service';
 
 describe('ComunaService', () => {
-  const resp: Array<Comuna> = [new Comuna()];
   let service: ComunaService;
-  const mockComunaRepository = {
-    find: jest.fn().mockImplementation(() => {
-      return resp;
-    }),
+  const mock = {
+    find: jest.fn().mockImplementation(() => true),
   };
 
   beforeEach(async () => {
@@ -19,7 +16,7 @@ describe('ComunaService', () => {
         ComunaService,
         {
           provide: getRepositoryToken(Comuna),
-          useValue: mockComunaRepository,
+          useValue: mock,
         },
       ],
     }).compile();

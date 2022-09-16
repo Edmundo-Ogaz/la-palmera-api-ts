@@ -1,5 +1,4 @@
 import { Test, TestingModule } from '@nestjs/testing';
-// import { TypeOrmModule } from '@nestjs/typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { Ciudad } from '../entity/Ciudad';
@@ -8,7 +7,7 @@ import { CiudadService } from './ciudad.service';
 describe('CiudadService', () => {
   const resp: Array<Ciudad> = [new Ciudad()];
   let service: CiudadService;
-  const mockCiudadRepository = {
+  const mock = {
     find: jest.fn().mockImplementation(() => {
       return resp;
     }),
@@ -20,7 +19,7 @@ describe('CiudadService', () => {
         CiudadService,
         {
           provide: getRepositoryToken(Ciudad),
-          useValue: mockCiudadRepository,
+          useValue: mock,
         },
       ],
     }).compile();

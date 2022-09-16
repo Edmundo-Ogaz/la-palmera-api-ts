@@ -1,36 +1,36 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthController } from './auth.controller';
-import { UserModel } from '../entity/UserModel';
 import { AuthService } from './auth.service';
-import { UsersModule } from '../users/users.module';
-import { TokensModule } from '../token/tokens.module';
-import { ConfigModule } from '@nestjs/config';
+import { UsersService } from '../users/users.service';
+import { TokensService } from '../token/tokens.service';
+import { ConfigService } from '@nestjs/config';
 
 describe('AuthService', () => {
   let service: AuthService;
   let module: TestingModule;
 
+  const mock = {
+    test: jest.fn().mockImplementation(() => true),
+  };
+
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'newuser',
-          password: 'password',
-          database: 'lapalmera2',
-          logging: true,
-          entities: [UserModel],
-        }),
-        TypeOrmModule.forFeature([UserModel]),
-        UsersModule,
-        TokensModule,
-        ConfigModule,
-      ],
       controllers: [AuthController],
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        {
+          provide: UsersService,
+          useValue: mock,
+        },
+        {
+          provide: TokensService,
+          useValue: mock,
+        },
+        {
+          provide: ConfigService,
+          useValue: mock,
+        },
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);

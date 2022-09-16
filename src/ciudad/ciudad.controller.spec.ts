@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
 import { Ciudad } from '../entity/Ciudad';
 import { CiudadController } from './ciudad.controller';
@@ -10,23 +10,20 @@ describe('CiudadController', () => {
   let service: CiudadService;
   let module: TestingModule;
 
+  const mockCiudadRepository = {
+    test: jest.fn(() => true),
+  };
+
   beforeAll(async () => {
     module = await Test.createTestingModule({
-      imports: [
-        TypeOrmModule.forRoot({
-          type: 'mysql',
-          host: 'localhost',
-          port: 3306,
-          username: 'newuser',
-          password: 'password',
-          database: 'lapalmera2',
-          logging: true,
-          entities: [Ciudad],
-        }),
-        TypeOrmModule.forFeature([Ciudad]),
-      ],
       controllers: [CiudadController],
-      providers: [CiudadService],
+      providers: [
+        CiudadService,
+        {
+          provide: getRepositoryToken(Ciudad),
+          useValue: mockCiudadRepository,
+        },
+      ],
     }).compile();
 
     controller = module.get<CiudadController>(CiudadController);
