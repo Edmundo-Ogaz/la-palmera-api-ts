@@ -6,12 +6,12 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { TokensModule } from './token/tokens.module';
 import { ComunaModule } from './comuna/comuna.module';
+import { CiudadModule } from './ciudad/ciudad.module';
 
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 import { UserModel } from './entity/UserModel';
 import { Comuna } from './entity/Comuna';
-import { CiudadModule } from './ciudad/ciudad.module';
 import { Ciudad } from './entity/Ciudad';
 
 import { AppController } from './app.controller';
@@ -24,11 +24,11 @@ import { AppController } from './app.controller';
     TokensModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'newuser',
-      password: 'password',
-      database: 'lapalmera2',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT, 10),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DATABASE,
       logging: true,
       entities: [UserModel, Comuna, Ciudad],
       //autoLoadEntities: true,

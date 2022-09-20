@@ -32,7 +32,7 @@ export class ComunaController {
 
   @Post('comunas')
   save(@Body() comunaDto: ComunaDto) {
-    console.log('ComunaController save');
+    console.log(`ComunaController save ${JSON.stringify(comunaDto)}`);
     return this.comunaService.save(comunaDto);
   }
 
