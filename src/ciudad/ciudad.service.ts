@@ -16,4 +16,14 @@ export class CiudadService {
     const cities: Array<Ciudad> = await this.cityRepository.find();
     return cities;
   }
+
+  async findByCodigoOrCodigoRegion(
+    codigo: string,
+    codigoRegion: string,
+  ): Promise<Ciudad[]> {
+    console.log(
+      `CiudadController findByCodigoOrCodigoRegion ciudad ${codigo} region ${codigoRegion}`,
+    );
+    return await this.cityRepository.findBy({ codigo, codigoRegion });
+  }
 }

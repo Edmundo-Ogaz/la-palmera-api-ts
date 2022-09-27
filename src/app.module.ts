@@ -7,12 +7,14 @@ import { UsersModule } from './users/users.module';
 import { TokensModule } from './token/tokens.module';
 import { ComunaModule } from './comuna/comuna.module';
 import { CiudadModule } from './ciudad/ciudad.module';
+import { RegionModule } from './region/region.module';
 
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
 
 import { UserModel } from './entity/UserModel';
 import { Comuna } from './entity/Comuna';
 import { Ciudad } from './entity/Ciudad';
+import { Region } from './entity/Region';
 
 import { AppController } from './app.controller';
 
@@ -30,12 +32,13 @@ import { AppController } from './app.controller';
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_DATABASE,
       logging: true,
-      entities: [UserModel, Comuna, Ciudad],
+      entities: [UserModel, Comuna, Ciudad, Region],
       //autoLoadEntities: true,
       //synchronize: true,
     }),
     ComunaModule,
     CiudadModule,
+    RegionModule,
   ],
   controllers: [AppController],
   providers: [
