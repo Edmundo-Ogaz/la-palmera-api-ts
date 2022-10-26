@@ -5,7 +5,7 @@ import { Public } from './constants';
 export class AppController {
   @Public()
   @Get('health')
-  async login() {
+  async health() {
     return true;
   }
 }
